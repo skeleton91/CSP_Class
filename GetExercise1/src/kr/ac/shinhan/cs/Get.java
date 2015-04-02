@@ -29,7 +29,7 @@ public class Get extends HttpServlet {
 
 		resp.getWriter().println("<html>");
 		resp.getWriter().println("<body>");
-		resp.getWriter().println("ÆÀ ¸â¹ö µî·Ï");
+		resp.getWriter().println("ÆÀ ¸â¹ö µî·Ïasdf");
 		resp.getWriter().println("ÀÌ¸§ : " + name + " <br> ");
 		resp.getWriter().println("ÇĞ¹ø : " + id + "<br>");
 		resp.getWriter().println("ÀüÈ­¹øÈ£ : " + num + "<br>");
