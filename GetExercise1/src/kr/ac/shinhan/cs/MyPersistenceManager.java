@@ -7,10 +7,10 @@ import javax.jdo.Query;
 
 public class MyPersistenceManager {
 	
-	public static MyPersistenceManager addMember(String uname, String socialNumber)
+	public static TeamMember addMember(String uname, String socialNumber)
 	{
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory("transactions-optional").getPersistenceManager();
-		MyPersistenceManager m = new MyPersistenceManager();
+		TeamMember m = new TeamMember(uname,socialNumber);
 		pm.makePersistent(m);
 		
 		return m;
@@ -32,14 +32,14 @@ public class MyPersistenceManager {
 		pm.deletePersistent(m);
 	}
 	
-	public static List<MyPersistenceManager> getMemberByName(String uname)
+	public static List<TeamMember> getMemberByName(String uname)
 	{
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory("transactions-optional").getPersistenceManager();
-		Query qry = pm.newQuery(MyPersistenceManager.class);
+		Query qry = pm.newQuery(TeamMember.class);
 		qry.setFilter("uname == nameParam");
 		qry.declareParameters("String nameParam");
 		
-		List<MyPersistenceManager> memberList = (List<MyPersistenceManager>) qry.execute(uname);
+		List<TeamMember> memberList = (List<TeamMember>) qry.execute(uname);
 		
 		return memberList;
 	}
@@ -47,7 +47,7 @@ public class MyPersistenceManager {
 	public static List<TeamMember> getAllMembers()
 	{
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory("transactions-optional").getPersistenceManager();
-		Query qry = pm.newQuery(MyPersistenceManager.class);
+		Query qry = pm.newQuery(TeamMember.class);
 		List<TeamMember> memberList = (List<TeamMember>) qry.execute();
 
 		return memberList;

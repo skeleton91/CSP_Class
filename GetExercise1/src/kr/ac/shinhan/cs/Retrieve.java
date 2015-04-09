@@ -18,7 +18,7 @@ public class Retrieve extends HttpServlet{
 		for(TeamMember m :memberList)
 		{
 			resp.getWriter().println("<tr>");
-			resp.getWriter().println("<td>"+"<a href = '/ReadMemberServlet?name="+m.getName()+"'>"+m.getName()+"</a>"+"</td><td>"+m.getSosialNum()+"</td>");
+			resp.getWriter().println("<td>"+"<a href = '/ReadTeamMemberServlet?uname="+m.getName()+"'>"+m.getName()+"</a>"+"</td><td>"+m.getSosialNum()+"</td>");
 			resp.getWriter().println("</tr>");
 		}
 		resp.getWriter().println("</table>");
