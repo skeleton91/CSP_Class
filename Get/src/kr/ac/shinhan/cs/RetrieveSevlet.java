@@ -14,6 +14,8 @@ public class RetrieveSevlet extends HttpServlet{
 		
 		
 		
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html");
 		resp.getWriter().println("<HTML>");
 		resp.getWriter().println("<body>");
 		resp.getWriter().println("<table border = 1>");
@@ -21,9 +23,12 @@ public class RetrieveSevlet extends HttpServlet{
 		{
 			resp.getWriter().println("<tr>");
 			resp.getWriter().println("<td>"+"<a href = '/ReadTeamMember?key="+m.getKey()+"'>"+m.getName()+"</a>"+"</td><td>"+m.getId()+"</td>"
-					+"<td>"+m.getNum()+"</td>"+"<td>"+m.getAdd()+"</td>"+"<td>"+m.getKaka()+"</td>"+"<td>"+m.isChk_info()+"</td>"+"<td>"+m.getGit()+"</td>");
+					+"<td>"+m.getNum()+"</td>"+"<td>"+m.getAdd()+"</td>"+"<td>"+m.getKaka()+"</td>"+"<td>"+m.isChk_info()+"</td>"+"<td>"+m.getGit()+"</td>"+"<td>"+
+					"<a href= '/DeleteSevlet?key="+ m.getKey() +"'>" + "ªË¡¶ </a>"+"</td>");
 			resp.getWriter().println("</tr>");
 		}
+		
+		
 		resp.getWriter().println("</table>");
 		resp.getWriter().println("</body>");
 		resp.getWriter().println("</HTML>");
