@@ -1,15 +1,15 @@
 package kr.ac.shinhan.cs;
 
-import java.awt.Checkbox;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.servlet.http.HttpServlet;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class TeamMember {
+public class TeamMember extends HttpServlet {
+
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Long key;
@@ -28,9 +28,7 @@ public class TeamMember {
 	@Persistent
 	private String git;
 
-
-	public TeamMember(String name, String id, String num, String add,
-			String kaka, boolean chk_info, String git) {
+	public TeamMember(String name, String id, String num, String add,String kaka, boolean chk_info, String git) {
 		this.name = name;
 		this.id = id;
 		this.num = num;
@@ -81,10 +79,12 @@ public class TeamMember {
 	}
 
 	public boolean isChk_info() {
+
 		return chk_info;
 	}
 
 	public void setChk_info(boolean chk_info) {
+
 		this.chk_info = chk_info;
 	}
 
