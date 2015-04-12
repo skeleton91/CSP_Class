@@ -74,4 +74,10 @@ public class MyPersistenceManager {
 		return memberList;
 	}
 
+	public static PersistenceManager getManager() {
+	      PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
+	            "transactions-optional").getPersistenceManager();
+	      return pm;
+	   }
+
 }

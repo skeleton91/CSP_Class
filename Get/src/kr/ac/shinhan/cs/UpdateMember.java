@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class UpdateMember extends HttpServlet{
-	public void doPost(HttpServletRequest req, HttpServletResponse resp,TeamMember newMember)	throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 	
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
 				"transactions-optional").getPersistenceManager();
 		
+		TeamMember newMember = MyPersistenceManager.getMember("key");
 		TeamMember memberObject = MyPersistenceManager.getMember(newMember.getKey() + "");
 		memberObject.setName(newMember.getName());
 		memberObject.setId(newMember.getId());
@@ -24,6 +25,7 @@ public class UpdateMember extends HttpServlet{
 		memberObject.setChk_info(newMember.isChk_info());
 		memberObject.setGit(newMember.getGit());
 		
+		pm.close();
 		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
@@ -51,7 +53,8 @@ public class UpdateMember extends HttpServlet{
 		resp.getWriter().println("</body>");
 		resp.getWriter().println("</html>");
 		
-		pm.close();
+		
+		
 		
 	}
 }

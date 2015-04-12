@@ -9,27 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DeleteSevlet extends HttpServlet{
-	public void doGet(HttpServletRequest req, HttpServletResponse resp,String key)	throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 	
+		 PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
+		            "transactions-optional").getPersistenceManager();
+		   String key =  req.getParameter("key");
+		      Long Key = Long.parseLong(key);
+		      
+		     
+		      TeamMember m = pm.getObjectById(TeamMember.class,Key); 
+		      pm.deletePersistent(m);
 		
-		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
-				"transactions-optional").getPersistenceManager();
-		TeamMember m = MyPersistenceManager.getMember(key);
-
-		pm.deletePersistent(m);
 		
-		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html");
-
-		resp.getWriter().println("<html>");
-		resp.getWriter().println("<body>");
 		
-		resp.getWriter().println("삭제되었습니다." + "<br>");
-		
-		resp.getWriter().println("<br>");
-		resp.getWriter().println("<a href='/retrieve'>이전으로</a>");
-		resp.getWriter().println("</body>");
-		resp.getWriter().println("</html>");
 		
 		
 	}

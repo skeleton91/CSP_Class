@@ -19,7 +19,7 @@ public class ReadMemberSevlet extends HttpServlet{
 		resp.getWriter().println("<html>");
 		resp.getWriter().println("<body>");
 		resp.getWriter().println("<tr>");
- 		resp.getWriter().println("<form method='POST' action='/UpdateMember'>");
+		resp.getWriter().println("<form method=\'post\' action=\'/UpdateMember?key=" + m.getKey() +"'>" );
  		resp.getWriter().println("<table border = 1>");
  			resp.getWriter().println("<tr>");
  			resp.getWriter().println("<td> ÀÌ¸§ </td>" + "<td>" + "<input type = 'text'  name = 'name'>" + "</td>");
@@ -55,6 +55,8 @@ public class ReadMemberSevlet extends HttpServlet{
  			
  		resp.getWriter().println("</form>");
       resp.getWriter().println("</tr>");
-   resp.getWriter().println("</table>");
+   
+   resp.getWriter().println("</body>");
+   resp.getWriter().println("</html>");
 	}
 }
