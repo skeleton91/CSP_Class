@@ -16,7 +16,7 @@ public class DeleteSevlet extends HttpServlet{
 				"transactions-optional").getPersistenceManager();
 		TeamMember m = MyPersistenceManager.getMember(key);
 
-		
+		pm.deletePersistent(m);
 		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
@@ -31,6 +31,6 @@ public class DeleteSevlet extends HttpServlet{
 		resp.getWriter().println("</body>");
 		resp.getWriter().println("</html>");
 		
-		pm.deletePersistent(m);
+		
 	}
 }

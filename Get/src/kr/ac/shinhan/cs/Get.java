@@ -44,8 +44,9 @@ public class Get extends HttpServlet {
 		else
 			resp.getWriter().println("팀원"+ "<br>");
 		resp.getWriter().println("GitHub Id : " + req.getParameter("git") + "<br>");
-		resp.getWriter().println("등록되었습니다." + "<br>");
 		resp.getWriter().println("</table>");
+		resp.getWriter().println("등록되었습니다." + "<br>");
+
 		resp.getWriter().println("<br>");
 		resp.getWriter().println("<a href='registmember.html'>이전으로</a>");
 		resp.getWriter().println("</body>");
