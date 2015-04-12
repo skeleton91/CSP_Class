@@ -21,8 +21,7 @@ public class Get extends HttpServlet {
 		
 		String git = req.getParameter("git");
 
-		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
-				"transactions-optional").getPersistenceManager();
+		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory("transactions-optional").getPersistenceManager();
 		TeamMember m = new TeamMember(name, id, num, add, kaka, chk_info, git);
 		pm.makePersistent(m);
 
@@ -32,7 +31,7 @@ public class Get extends HttpServlet {
 		resp.getWriter().println("<html>");
 		resp.getWriter().println("<body>");
 		resp.getWriter().println("<h1>" + "팀 멤버 등록" + "</h1>" + "<br>");
-
+		resp.getWriter().println("<table border = 1>");
 		resp.getWriter().println("이름 : " + name + " <br> ");
 		resp.getWriter().println("학번 : " + id + "<br>");
 		resp.getWriter().println("전화번호 : " + num + "<br>");
@@ -46,6 +45,7 @@ public class Get extends HttpServlet {
 			resp.getWriter().println("팀원"+ "<br>");
 		resp.getWriter().println("GitHub Id : " + req.getParameter("git") + "<br>");
 		resp.getWriter().println("등록되었습니다." + "<br>");
+		resp.getWriter().println("</table>");
 		resp.getWriter().println("<br>");
 		resp.getWriter().println("<a href='registmember.html'>이전으로</a>");
 		resp.getWriter().println("</body>");

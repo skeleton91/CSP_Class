@@ -27,6 +27,22 @@ public class MyPersistenceManager {
 
 		return m;
 	}
+	
+	public static void updateMember(TeamMember newMember)
+	{
+		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
+				"transactions-optional").getPersistenceManager();
+		TeamMember memberObject = MyPersistenceManager.getMember(newMember.getKey() + "");
+		memberObject.setName(newMember.getName());
+		memberObject.setId(newMember.getId());
+		memberObject.setNum(newMember.getNum());
+		memberObject.setAdd(newMember.getAdd());
+		memberObject.setKaka(newMember.getKaka());
+		memberObject.setChk_info(newMember.isChk_info());
+		memberObject.setGit(newMember.getGit());
+		
+		pm.close();
+	}
 
 	public static void deleteMember(String key) {
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(

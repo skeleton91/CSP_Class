@@ -12,7 +12,7 @@ public class RetrieveSevlet extends HttpServlet {
 			throws IOException {
 
 		List<TeamMember> memberList = MyPersistenceManager.getAllMembers();
-
+		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
 
@@ -25,18 +25,19 @@ public class RetrieveSevlet extends HttpServlet {
 		resp.getWriter().println("<td>이름</td><td>학번</td><td>전화번호</td><td>메일주소</td><td>카카오톡아이디</td><td>팀장여부</td><td>GitHub Id</td>");
 
 		resp.getWriter().println("</tr>");
+			
 		for (TeamMember m : memberList) {
 
 			resp.getWriter().println("<tr bgcolor = '#ddddff'>");
 
-			resp.getWriter().println(
-					"<td>" + "<a href = '/ReadTeamMember?key=" + m.getKey()
+		resp.getWriter().println( 
+							"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
 							+ "'>" + m.getName() + "</a>" + "</td><td>"
 							+ m.getId() + "</td>" + "<td>" + m.getNum()
 							+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
 							+ m.getKaka() + "</td>" + "<td>" + m.isChk_info()
 							+ "</td>" + "<td>" + m.getGit() + "</td>" + "<td>"
-							+ "<a href= '/ReadDeleteSevlet?key=" + m.getKey()
+							+ "<a href= '/DeleteSevlet?key=" + m.getKey()
 							+ "'>" + "삭제 </a>" + "</td>");
 			resp.getWriter().println("</tr>");
 		}

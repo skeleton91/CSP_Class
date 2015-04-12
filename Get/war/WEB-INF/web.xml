@@ -18,6 +18,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 	
 
+	
 	<servlet>
 		<servlet-name>Retrieve</servlet-name>
 		<servlet-class>kr.ac.shinhan.cs.RetrieveSevlet</servlet-class>
@@ -26,6 +27,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>Retrieve</servlet-name>
 		<url-pattern>/retrieve</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateMember</servlet-name>
+		<servlet-class>kr.ac.shinhan.cs.UpdateMember</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateMember</servlet-name>
+		<url-pattern>/UpdateMember</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ReadMemberSevlet</servlet-name>
+		<servlet-class>kr.ac.shinhan.cs.ReadMemberSevlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReadMemberSevlet</servlet-name>
+		<url-pattern>/ReadMemberSevlet</url-pattern>
+	</servlet-mapping>
+	
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
