@@ -22,7 +22,7 @@ public class RetrieveSevlet extends HttpServlet {
 		resp.getWriter().println("<body>");
 		resp.getWriter().println("<h1>" + "팀 멤버 조회" + "</h1>" + "<br>");
 		resp.getWriter().println("<table border = 1>");
-		resp.getWriter().println("<tr bgcolor = '#ffddff'>");
+		resp.getWriter().println("<tr bgcolor = '#bbccdd' >");
 
 		resp.getWriter().println("<td>이름</td><td>학번</td><td>전화번호</td><td>메일주소</td><td>카카오톡아이디</td><td>팀장여부</td><td>GitHub Id</td>");
 
@@ -32,7 +32,7 @@ public class RetrieveSevlet extends HttpServlet {
 			
 			if(m.isChk_info() == true)
 				{
-				resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				resp.getWriter().println("<tr bgcolor = '#eeeeee'>");
 				resp.getWriter().println( 
 						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
 						+ "'>" + m.getName() + "</a>" + "</td><td>"
@@ -45,7 +45,7 @@ public class RetrieveSevlet extends HttpServlet {
 				}
 			else
 				{
-				resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				resp.getWriter().println("<tr bgcolor = '#eeeeee'>");
 				resp.getWriter().println( 
 						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
 						+ "'>" + m.getName() + "</a>" + "</td><td>"
