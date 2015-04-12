@@ -14,6 +14,7 @@ public class MyPersistenceManager {
 		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
 				"transactions-optional").getPersistenceManager();
 		TeamMember m = new TeamMember(name, id, num, add, kaka, chk_info, git);
+		
 
 		pm.makePersistent(m);
 

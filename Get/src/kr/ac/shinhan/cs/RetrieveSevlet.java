@@ -16,6 +16,8 @@ public class RetrieveSevlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
 
+		
+		
 		resp.getWriter().println("<HTML>");
 		resp.getWriter().println("<body>");
 		resp.getWriter().println("<h1>" + "∆¿ ∏‚πˆ ¡∂»∏" + "</h1>" + "<br>");
@@ -27,18 +29,30 @@ public class RetrieveSevlet extends HttpServlet {
 		resp.getWriter().println("</tr>");
 			
 		for (TeamMember m : memberList) {
+			
+			if(m.isChk_info() == true)
+				{resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				resp.getWriter().println( 
+						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
+						+ "'>" + m.getName() + "</a>" + "</td><td>"
+						+ m.getId() + "</td>" + "<td>" + m.getNum()
+						+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
+						+ m.getKaka() + "</td>" + "<td>" +  "∆¿¿Â" + "</td>"
+						+ "<td>" + m.getGit() + "</td>" + "<td>"
+						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
+						+ "'>" + "ªË¡¶ </a>" + "</td>");}
+			else
+				{resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				resp.getWriter().println( 
+						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
+						+ "'>" + m.getName() + "</a>" + "</td><td>"
+						+ m.getId() + "</td>" + "<td>" + m.getNum()
+						+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
+						+ m.getKaka() + "</td>" + "<td>" +  "∆¿ø¯" + "</td>"
+						+ "<td>" + m.getGit() + "</td>" + "<td>"
+						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
+						+ "'>" + "ªË¡¶ </a>" + "</td>");}
 
-			resp.getWriter().println("<tr bgcolor = '#ddddff'>");
-
-		resp.getWriter().println( 
-							"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
-							+ "'>" + m.getName() + "</a>" + "</td><td>"
-							+ m.getId() + "</td>" + "<td>" + m.getNum()
-							+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
-							+ m.getKaka() + "</td>" + "<td>" + m.isChk_info()
-							+ "</td>" + "<td>" + m.getGit() + "</td>" + "<td>"
-							+ "<a href= '/DeleteSevlet?key=" + m.getKey()
-							+ "'>" + "ªË¡¶ </a>" + "</td>");
 			resp.getWriter().println("</tr>");
 		}
 
