@@ -31,7 +31,8 @@ public class RetrieveSevlet extends HttpServlet {
 		for (TeamMember m : memberList) {
 			
 			if(m.isChk_info() == true)
-				{resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				{
+				resp.getWriter().println("<tr bgcolor = '#ddddff'>");
 				resp.getWriter().println( 
 						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
 						+ "'>" + m.getName() + "</a>" + "</td><td>"
@@ -40,9 +41,11 @@ public class RetrieveSevlet extends HttpServlet {
 						+ m.getKaka() + "</td>" + "<td>" +  "팀장" + "</td>"
 						+ "<td>" + m.getGit() + "</td>" + "<td>"
 						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
-						+ "'>" + "삭제 </a>" + "</td>");}
+						+ "'>" + "삭제 </a>" + "</td>");
+				}
 			else
-				{resp.getWriter().println("<tr bgcolor = '#ddddff'>");
+				{
+				resp.getWriter().println("<tr bgcolor = '#ddddff'>");
 				resp.getWriter().println( 
 						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
 						+ "'>" + m.getName() + "</a>" + "</td><td>"
@@ -51,7 +54,8 @@ public class RetrieveSevlet extends HttpServlet {
 						+ m.getKaka() + "</td>" + "<td>" +  "팀원" + "</td>"
 						+ "<td>" + m.getGit() + "</td>" + "<td>"
 						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
-						+ "'>" + "삭제 </a>" + "</td>");}
+						+ "'>" + "삭제 </a>" + "</td>");
+				}
 
 			resp.getWriter().println("</tr>");
 		}
