@@ -16,6 +16,9 @@ public class LogoutServlet extends HttpServlet {
 			throws IOException {
 
 		
+		String token_ID = null;
+		String expireDate = req.getParameter("expireDate");
+		String id = req.getParameter("id");
 		String userID = req.getParameter("userID");
 		String check_in = req.getParameter("remember");
 		String token = UUID.randomUUID().toString();
@@ -32,15 +35,15 @@ public class LogoutServlet extends HttpServlet {
 		qry.setFilter("userID == idParam");
 		qry.declareParameters("String idParam");
 
-		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(userID);
-		List<UserAccount> userAccount1 = (List<UserAccount>) qry.execute(token);
+		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(id);
+	
 		
 		Cookie[] cookieList = req.getCookies();
 
 		for (Cookie cookie : cookieList)
 
 		{
-			if((check_in != null) || (cookie.getName().equals(token)))
+			if((check_in != null))
 
 			{
 				HttpSession session = req.getSession();
@@ -52,7 +55,7 @@ public class LogoutServlet extends HttpServlet {
 
 				cookie.setMaxAge(0);
 
-				cookie = new Cookie("userID", token );
+				token = null;
 				
 				resp.addCookie(cookie);
 				

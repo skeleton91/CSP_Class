@@ -15,10 +15,9 @@ public class LoginServelet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		String userID = req.getParameter("userID");
+		String id = req.getParameter("id");
 		String password = req.getParameter("password");
 		String check_in = req.getParameter("remember");
-		
 		String token = UUID.randomUUID().toString();
 		
 		
@@ -31,8 +30,8 @@ public class LoginServelet extends HttpServlet {
 		qry.setFilter("userID == idParam");
 		qry.declareParameters("String idParam");
 
-		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(userID);
-		List<UserAccount> userAccount1 = (List<UserAccount>) qry.execute(token);
+		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(id);
+
 		
 		
 		
@@ -44,11 +43,6 @@ public class LoginServelet extends HttpServlet {
 		else if (userAccount.get(0).getPassword().equals(password)) {
 			success = true;
 			
-			Cookie cookie = new Cookie("userID", token );
-
-			
-
-			resp.addCookie(cookie);
 			
 		}
 
@@ -65,24 +59,29 @@ public class LoginServelet extends HttpServlet {
 		}
 
 		if (success) {
+			
+			HttpSession session = req.getSession();
+			
+			session.setAttribute("Session_ID", id);
+			
 			if(check_in != null){
 				
-				Cookie cookie = new Cookie("userID", token );
+				
+				Cookie[] cookieList = req.getCookies();
+				Cookie cookie = new Cookie("token_ID", token );
 
 				cookie.setMaxAge(30 * 24 * 60 * 60);
-
-				resp.addCookie(cookie);
-
-						//
+				
 				
 
+				resp.addCookie(cookie);
 				
 			}
 			
 			
 			
 			
-			resp.sendRedirect("/index.html");
+			resp.sendRedirect("index.html");
 		}
 
 		resp.getWriter().println("</body>");
