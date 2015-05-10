@@ -2,67 +2,106 @@ package kr.ac.shinhan.cs;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RetrieveSevlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	 throws IOException
+	 {
+		String token = UUID.randomUUID().toString();
+		
+		String userID = req.getParameter("userID");
+		String id = req.getParameter("id");
+		HttpSession session = req.getSession();
+		session.setAttribute("userID", token);
+		
+		
+		
+		PersistenceManager pm = MyPersistenceManager.getManager();
+		Query qry = pm.newQuery(TeamMember.class);
+		Query qry1 = MyPersistenceManager.getManager().newQuery(UserAccount.class);
 
-		List<TeamMember> memberList = MyPersistenceManager.getAllMembers();
+		qry1.setFilter("userID == idParam");
+		qry1.declareParameters("String idParam");
 		
-		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html");
-
+		List<UserAccount> userAccount = (List<UserAccount>) qry1.execute(userID);
+		List<TeamMember> memberList = (List<TeamMember>) qry.execute();
+		
+		String userId = req.getParameter("userID");
+		
+		Cookie[] cookieList = req.getCookies();
+		
+		for(Cookie c : cookieList){
+		
+		if(c.getName().equals(token))
+		
+		{
+		
+		  id = c.getValue();
 		
 		
-		resp.getWriter().println("<HTML>");
+		
+		}
+		
+}
+		
+		
+		req.setCharacterEncoding("EUC-KR");
+		resp.setContentType("text/plain;charset=utf-8");
+	
+		resp.getWriter().println("<html>");
 		resp.getWriter().println("<body>");
-		resp.getWriter().println("<h1>" + "팀 멤버 조회" + "</h1>" + "<br>");
-		resp.getWriter().println("<table border = 1>");
-		resp.getWriter().println("<tr bgcolor = '#bbccdd' >");
-
-		resp.getWriter().println("<td>이름</td><td>학번</td><td>전화번호</td><td>메일주소</td><td>카카오톡아이디</td><td>팀장여부</td><td>GitHub Id</td>");
-
+		if(session.isNew())
+			session.setMaxInactiveInterval(1000);
+		resp.setContentType("text/plain");
+		
+		resp.getWriter().println( userId  + "님 환영합니다.");
+		resp.getWriter().println("title : " + session.getAttribute("id"));
+		resp.getWriter().println(session.getId());
+		resp.getWriter().println("<table border='1'>");
+		resp.getWriter().println("<tr>");
+		resp.getWriter().println("<th>"+"이름" + "</th>" );	//맨처음행 
+		resp.getWriter().println("<th>"+"학번" + "</th>" );
+		resp.getWriter().println("<th>"+"전화번호" + "</th>" );
+		resp.getWriter().println("<th>"+"메일주소" + "</th>" );
+		resp.getWriter().println("<th>"+"카카오톡 아이디" + "</th>" );
+		resp.getWriter().println("<th>"+"팀장여부" + "</th>" );
+		resp.getWriter().println("<th>"+"GitHub ID" + "</th>" );
+		resp.getWriter().println("<th>"+"회원삭제" + "</th>" );
 		resp.getWriter().println("</tr>");
 			
-		for (TeamMember m : memberList) {
-			
-			if(m.isChk_info() == true)
-				{
-				resp.getWriter().println("<tr bgcolor = '#eeeeee'>");
-				resp.getWriter().println( 
-						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
-						+ "'>" + m.getName() + "</a>" + "</td><td>"
-						+ m.getId() + "</td>" + "<td>" + m.getNum()
-						+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
-						+ m.getKaka() + "</td>" + "<td>" +  "팀장" + "</td>"
-						+ "<td>" + m.getGit() + "</td>" + "<td>"
-						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
-						+ "'>" + "삭제 </a>" + "</td>");
-				}
+		for(TeamMember tm:memberList)
+		{
+			resp.getWriter().println("<tr>");
+			resp.getWriter().println("<td>"+ "<a href =/readteammember?key="+tm.getKey()+">"+ tm.getName()+"</td>");
+			resp.getWriter().println("<td>" + tm.getid()+ "</td>");
+			resp.getWriter().println("<td>" + tm.getNum()+ "</td>");
+			resp.getWriter().println("<td>" + tm.getEmail()+ "</td>");
+			resp.getWriter().println("<td>" + tm.getKakaoid()+ "</td>");
+			if(tm.isChkinfo() ==true)
+			resp.getWriter().println("<td>" + "팀장" + "</td>");
 			else
-				{
-				resp.getWriter().println("<tr bgcolor = '#eeeeee'>");
-				resp.getWriter().println( 
-						"<td>" + "<a href = '/ReadMemberSevlet?name=" + m.getName()
-						+ "'>" + m.getName() + "</a>" + "</td><td>"
-						+ m.getId() + "</td>" + "<td>" + m.getNum()
-						+ "</td>" + "<td>" + m.getAdd() + "</td>" + "<td>"
-						+ m.getKaka() + "</td>" + "<td>" +  "팀원" + "</td>"
-						+ "<td>" + m.getGit() + "</td>" + "<td>"
-						+ "<a href= '/DeleteSevlet?key=" + m.getKey()
-						+ "'>" + "삭제 </a>" + "</td>");
-				}
-
+			resp.getWriter().println("<td>" + "팀원입니다" + "</td>");
+			resp.getWriter().println("<td>" + tm.getGitid()+ "</td>");
+			resp.getWriter().println("<td>" + "<a href =/deletemember?key="+tm.getKey()+ ">"+"삭제" + "</td>");
 			resp.getWriter().println("</tr>");
 		}
-
+		
 		resp.getWriter().println("</table>");
+		resp.getWriter().println("<br><br><a href='index.html'>처음으로</a>");
 		resp.getWriter().println("</body>");
-		resp.getWriter().println("</HTML>");
-
-	}
+		resp.getWriter().println("</html>");
+	 }
+	
+	
+	
+	
 }

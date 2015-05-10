@@ -2,59 +2,67 @@ package kr.ac.shinhan.cs;
 
 import java.io.IOException;
 
-
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class UpdateMember extends HttpServlet{
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
+public class UpdateMember extends HttpServlet {
 	
-		PersistenceManager pm = JDOHelper.getPersistenceManagerFactory(
-				"transactions-optional").getPersistenceManager();
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException { 
+		String key =  req.getParameter("key");
+		Long longKey = Long.parseLong(key);
 		
-		TeamMember newMember = MyPersistenceManager.getMember("key");
-		TeamMember memberObject = MyPersistenceManager.getMember(newMember.getKey() + "");
-		memberObject.setName(newMember.getName());
-		memberObject.setId(newMember.getId());
-		memberObject.setNum(newMember.getNum());
-		memberObject.setAdd(newMember.getAdd());
-		memberObject.setKaka(newMember.getKaka());
-		memberObject.setChk_info(newMember.isChk_info());
-		memberObject.setGit(newMember.getGit());
+		String name = req.getParameter("name");
+		String id = req.getParameter("id");
+		String num = req.getParameter("num");
+		String email = req.getParameter("email");
+		String kakaoid = req.getParameter("kakaoid");
+		String gitid = req.getParameter("gitid");		
+		boolean check = req.getParameter("chk_info") != null;
 		
+		PersistenceManager pm = MyPersistenceManager.getManager();
+		TeamMember tm =  pm.getObjectById(TeamMember.class,longKey);
+		
+		tm.setName(name);
+		tm.setid(id);
+		tm.setNum(num);
+		tm.setEmail(email);
+		tm.setKakaoid(kakaoid);
+		tm.setGitid(gitid);
+		tm.setChk_info(check);
 		pm.close();
+		
+		String title = req.getParameter("title");
+		HttpSession session = req.getSession();
+		session.setAttribute("title", title);
 		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
-
+	
 		resp.getWriter().println("<html>");
 		resp.getWriter().println("<body>");
-		resp.getWriter().println("<h1>" + "팀 멤버 등록" + "</h1>" + "<br>");
-		resp.getWriter().println("<table border = 1>");
-		resp.getWriter().println("이름 : " + newMember.getName() + " <br> ");
-		resp.getWriter().println("학번 : " + newMember.getId() + "<br>");
-		resp.getWriter().println("전화번호 : " + newMember.getNum() + "<br>");
-		resp.getWriter().println("메일주소 : " + newMember.getAdd() + "<br>");
-		resp.getWriter().println("카카오톡 아이디 : " + newMember.getKaka() + "<br>");
-		resp.getWriter().println("팀장여부 : ");
-		if(newMember.isChk_info() == true){
-			resp.getWriter().println("팀장"+ "<br>");
-		}
+		resp.getWriter().println("title : " + session.getAttribute("title"));
+		resp.getWriter().println("theater : " + req.getParameter("theater"));
+		resp.getWriter().println("<h1>" + "다음과 같이 해당 팀원의 정보가 수정되었습니다" + "</h1>");
+		resp.getWriter().println("<table border=1>");
+		resp.getWriter().println("<tr>"+ "<td>" +"이름  " +"</td>" +"<td>" + name + "</td>" + "</tr>");
+		resp.getWriter().println("<tr>"+ "<td>" +"학번  " +"</td>" +"<td>" + id + "</td>" + "</tr>");
+		resp.getWriter().println("<tr>"+ "<td>" +"전화번호 : " +"</td>" +"<td>" + num + "</td>" + "</tr>");
+		resp.getWriter().println("<tr>"+ "<td>" +"메일주소 : " +"</td>" +"<td>" + email + "</td>" + "</tr>");
+		resp.getWriter().println("<tr>"+ "<td>" +"카카오톡 아이디 : " +"</td>" +"<td>" + kakaoid + "</td>" + "</tr>");
+		if(check != true)
+			resp.getWriter().println("<tr>"+ "<td>" +"팀장여부" +"</td>" +"<td>" + "팀원입니다" + "</td>" + "</tr>");
 		else
-			resp.getWriter().println("팀원"+ "<br>");
-		resp.getWriter().println("GitHub Id : " + newMember.getGit() + "<br>");
-		resp.getWriter().println("등록되었습니다." + "<br>");
+			resp.getWriter().println("<tr>"+ "<td>" +"팀장여부" +"</td>" +"<td>" + "팀장" + "</td>" + "</tr>");
+		resp.getWriter().println("<tr>"+ "<td>" +"GitHub ID" +"</td>" +"<td>" + gitid + "</td>" + "</tr>");
 		resp.getWriter().println("</table>");
-		resp.getWriter().println("<br>");
-		resp.getWriter().println("<a href='/retrieve'>이전으로</a>");
+		resp.getWriter().println("<a href=" +"retrive" + ">" + "뒤로가기" + "</a>"+"</br>");
+		resp.getWriter().println("<a href=" +"index.html" + ">" + "처음으로" + "</a>"+"</br>");
 		resp.getWriter().println("</body>");
 		resp.getWriter().println("</html>");
-		
-		
-		
 		
 	}
 }

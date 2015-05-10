@@ -5,39 +5,15 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import javax.servlet.http.HttpServlet;
+
+
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class TeamMember extends HttpServlet {
-
+public class TeamMember {
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long key;
-	@Persistent
-	private String name;
-	@Persistent
-	private String id;
-	@Persistent
-	private String num;
-	@Persistent
-	private String add;
-	@Persistent
-	private String kaka;
-	@Persistent
-	private boolean chk_info;
-	@Persistent
-	private String git;
-
-	public TeamMember(String name, String id, String num, String add,String kaka, boolean chk_info, String git) {
-		this.name = name;
-		this.id = id;
-		this.num = num;
-		this.add = add;
-		this.chk_info = chk_info;
-		this.kaka = kaka;
-		this.git = git;
-	}
-
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) //아 저장되는 필드구나
+	private Long key; //프라이머리
+	
 	public String getName() {
 		return name;
 	}
@@ -46,14 +22,19 @@ public class TeamMember extends HttpServlet {
 		this.name = name;
 	}
 
-	public String getId() {
+	public String getid() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setid(String id) {
 		this.id = id;
 	}
 
+	public Long getKey() {
+		return key;
+	}
+
+	
 	public String getNum() {
 		return num;
 	}
@@ -62,42 +43,62 @@ public class TeamMember extends HttpServlet {
 		this.num = num;
 	}
 
-	public String getAdd() {
-		return add;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setAdd(String add) {
-		this.add = add;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getKaka() {
-		return kaka;
+	public String getKakaoid() {
+		return kakaoid;
 	}
 
-	public void setKaka(String kaka) {
-		this.kaka = kaka;
+	public void setKakaoid(String kakaoid) {
+		this.kakaoid = kakaoid;
 	}
 
-	public boolean isChk_info() {
+	public String getGitid() {
+		return gitid;
+	}
 
+	public void setGitid(String gitid) {
+		this.gitid = gitid;
+	}
+	@Persistent
+	private String name;
+	@Persistent
+	private String id;
+	@Persistent
+	private String num;
+	@Persistent
+	private String email;
+	@Persistent
+	private String kakaoid;
+	@Persistent
+	private String gitid;
+	@Persistent
+	private boolean chk_info;
+
+	public boolean isChkinfo() {
 		return chk_info;
 	}
 
 	public void setChk_info(boolean chk_info) {
-
 		this.chk_info = chk_info;
 	}
 
-	public String getGit() {
-		return git;
+	public TeamMember(String name, String id,String num, String email, String kakaoid, String gitid, boolean chk_info)
+	{
+		this.name = name;
+		this.id =id;
+		this.num=num;
+		this.email=email;
+		this.kakaoid=kakaoid;
+		this.gitid=gitid;
+		this.chk_info=chk_info;
 	}
-
-	public void setGit(String git) {
-		this.git = git;
-	}
-
-	public Long getKey() {
-		return key;
-	}
+	
 
 }
