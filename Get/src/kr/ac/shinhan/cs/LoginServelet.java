@@ -1,9 +1,15 @@
 package kr.ac.shinhan.cs;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +24,9 @@ public class LoginServelet extends HttpServlet {
 		String id = req.getParameter("id");
 		String password = req.getParameter("password");
 		String check_in = req.getParameter("remember");
+		String expireData = req.getParameter("expireData");
 		String token = UUID.randomUUID().toString();
+		
 		
 		
 		boolean success = false;
@@ -26,11 +34,14 @@ public class LoginServelet extends HttpServlet {
 		MyPersistenceManager.getManager();
 
 		Query qry = MyPersistenceManager.getManager().newQuery(UserAccount.class);
-
+		
 		qry.setFilter("userID == idParam");
 		qry.declareParameters("String idParam");
+		
+		
 
 		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(id);
+		
 
 		
 		
@@ -67,14 +78,36 @@ public class LoginServelet extends HttpServlet {
 			if(check_in != null){
 				
 				
-				Cookie[] cookieList = req.getCookies();
+				
+				 
+				
 				Cookie cookie = new Cookie("token_ID", token );
 
 				cookie.setMaxAge(30 * 24 * 60 * 60);
-				
-				
-
 				resp.addCookie(cookie);
+				
+				
+				Calendar cal = Calendar.getInstance();
+			    cal.setTime(new Date());
+			    cal.add(Calendar.DATE, 30);
+			   
+			     
+			    // 특정 형태의 날짜로 값을 뽑기 
+			    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			    String strDate = df.format(cal.getTime());
+			    System.err.println(strDate);
+				
+				expireData = strDate;
+				
+				
+				
+				UserLoginToken ul = new UserLoginToken(token,id,expireData);
+				PersistenceManager pm = MyPersistenceManager.getManager();
+				pm.makePersistent(ul);
+
+				
+				
+				 
 				
 			}
 			

@@ -16,8 +16,10 @@ public class SignUpServlet extends HttpServlet {
       resp.setContentType("text/html");
       
       String id = req.getParameter("id");
+      String userID = req.getParameter("userID");
       String name = req.getParameter("name");
       String password = req.getParameter("password");
+      Long key = null;
       boolean check = false ;
 
       PersistenceManager pm = MyPersistenceManager.getManager();
@@ -51,7 +53,7 @@ public class SignUpServlet extends HttpServlet {
       }
 
          else{
-            UserAccount ua = new UserAccount(id, password, name);
+            UserAccount ua = new UserAccount(id, password, name, key);
             MyPersistenceManager.getManager().makePersistent(ua);
             
            

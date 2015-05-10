@@ -48,14 +48,15 @@ public class LogoutServlet extends HttpServlet {
 			{
 				HttpSession session = req.getSession();
 				
-
+				
+				
 				session.invalidate();
 				
 				cookie.setValue(null);
 
 				cookie.setMaxAge(0);
 
-				token = null;
+				
 				
 				resp.addCookie(cookie);
 				

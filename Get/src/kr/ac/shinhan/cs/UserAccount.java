@@ -23,11 +23,12 @@ public class UserAccount {
 	@Persistent
 	private String name;
 
-	public UserAccount(String userID, String password, String name) {
+	public UserAccount(String userID, String password, String name, Long key) {
 		super();
 		this.userID = userID;
 		this.password = password;
 		this.name = name;
+		this.key = key;
 	}
 
 	public String getPassword() {
