@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -16,37 +17,23 @@ public class LogoutServlet extends HttpServlet {
 			throws IOException {
 
 		
-		String token_ID = null;
-		String expireDate = req.getParameter("expireDate");
-		String id = req.getParameter("id");
-		String userID = req.getParameter("userID");
-		String check_in = req.getParameter("remember");
-		String token = UUID.randomUUID().toString();
-		
-		
-		
-		
-		
-		
-		MyPersistenceManager.getManager();
+		Long key = null;
+		HttpSession session = req.getSession(false);
 
-		Query qry = MyPersistenceManager.getManager().newQuery(UserAccount.class);
 
-		qry.setFilter("userID == idParam");
-		qry.declareParameters("String idParam");
-
-		List<UserAccount> userAccount = (List<UserAccount>) qry.execute(id);
-	
+		key = (Long) session.getAttribute("ck_key");
+		
+		if(key != null){
 		
 		Cookie[] cookieList = req.getCookies();
 
 		for (Cookie cookie : cookieList)
 
 		{
-			if((check_in != null))
+			if((cookie.getName().equals("token_ID")))
 
 			{
-				HttpSession session = req.getSession();
+				
 				
 				
 				
@@ -55,11 +42,17 @@ public class LogoutServlet extends HttpServlet {
 				cookie.setValue(null);
 
 				cookie.setMaxAge(0);
-
-				
-				
 				resp.addCookie(cookie);
+
+				}
+			}
 				
+			
+				
+				
+				PersistenceManager pm = MyPersistenceManager.getManager();
+				UserLoginToken ul = pm.getObjectById(UserLoginToken.class,key);
+				pm.makePersistent(ul);
 				
 
 			}
@@ -68,5 +61,5 @@ public class LogoutServlet extends HttpServlet {
 			}
 
 		}
-	}
+	
 

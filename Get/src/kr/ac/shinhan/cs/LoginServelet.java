@@ -106,7 +106,17 @@ public class LoginServelet extends HttpServlet {
 				pm.makePersistent(ul);
 
 				
+				Query qry1 = MyPersistenceManager.getManager().newQuery(UserLoginToken.class);
 				
+				List<UserLoginToken> log = (List<UserLoginToken>) qry1.execute(id);
+				
+				qry1.setFilter("userID == idParam");
+				qry1.declareParameters("String idParam");
+				
+				UserLoginToken log1 = log.get(0);
+				Long key = log1.getKey();
+				
+				session.setAttribute("ck_key",key);
 				 
 				
 			}
